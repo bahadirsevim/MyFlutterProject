@@ -1,31 +1,32 @@
 [
   {
     "question": "Türkiyenin başkenti neresidir?",
-    "options": ["İstanbul", "İzmir", "Ankara"],
+    "options": [
+      {
+        "option": "İstanbul"
+      },
+      {
+        "option": "İzmir"
+      },
+      {
+        "option": "Ankara"
+      }
+    ],
     "answer": "Ankara"
   },
   {
-    "question": "Baklavası ile ünlü ilimiz neresidir?",
-    "options": ["Gaziantep", "muğla", "Ankara"],
-    "answer": "Gaziantep"
-  },
-  {
-    "question": "Doğu Ekspresi nerede başlayıp nerede biter?",
-    "options": ["İstanbul-Kars", "İzmir-Aydın", "Ankara-Kars"],
-    "answer": "Ankara-Kars"
-  },
-  {
-    "question": "Yunanistanın başkenti neresidir?",
-    "options": ["Girit", "Selanik", "Atina"],
-    "answer": "Atina"
-  },
-  {
-    "question": "Yıldırım Bayezid Ankara'da kime karşı savaşmıştır?",
+    "question": "Türkiyenin başkenti neresidir?",
     "options": [
-      "Fatih Sultan Mehmet",
-      "Emir Timur",
-      "Şah İsmail"
+      {
+        "option": "İstanbul"
+      },
+      {
+        "option": "İzmir"
+      },
+      {
+        "option": "Ankara"
+      }
     ],
-    "answer": "Emir Timur"
+    "answer": "Ankara"
   }
 ]

@@ -13,7 +13,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var myColor = Colors.white;
   MyQuestion? question;
   List<MyQuestion?> questions = [];
 
@@ -27,7 +26,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("KPSS - Ezber Sorular", style: TextStyle(color: Colors.amber),),
+        title: const Text(
+          "KPSS - Ezber Sorular",
+          style: TextStyle(color: Colors.amber),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -35,21 +37,19 @@ class _MyHomePageState extends State<MyHomePage> {
       body: FutureBuilder(
         future: QuestionApi.getUsersLocally(context),
         builder: (context, snapshot) {
-
-          switch(snapshot.connectionState){
-
+          switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return const Center(child: CircularProgressIndicator());
             default:
-              if(snapshot.hasError){
+              if (snapshot.hasError) {
                 return const Center(child: Text("Some error had"));
-              }else{
-                if (snapshot.data==null)return Container();
+              } else {
+                if (snapshot.data == null) return Container();
                 questions = snapshot.data!;
                 var random = Random();
                 var index = random.nextInt(questions!.length);
 
-                  question ??= questions![index];
+                question ??= questions![index];
 
                 return buildQuestion(questions!);
               }
@@ -60,57 +60,49 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildQuestion(List<MyQuestion?> questions) {
-
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
             flex: 40,
             child: Container(
-                child: Center(
-                    child: Text(
-                      question?.question!??",",
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                    )
-                ),
-            )
-        ),
+              child: Center(
+                  child: Text(
+                question?.question! ?? ",",
+                style: Theme.of(context).textTheme.headline6,
+                textAlign: TextAlign.center,
+              )),
+            )),
         Expanded(
             flex: 19,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: myCard(question!, 0),
-            )
-        ),
+            )),
         Expanded(
             flex: 19,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: myCard(question!, 1),
-            )
-        ),
+            )),
         Expanded(
             flex: 19,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: myCard(question!, 2),
-            )
-        ),
+            )),
         const SizedBox(
           height: 50.0,
         ),
         Expanded(
           flex: 10,
           child: ElevatedButton(
-            onPressed: (){
+            onPressed: () {
               setState(() {
                 var random = Random();
                 var index = random.nextInt(questions!.length);
                 question = questions![index];
                 index++;
-                myColor = Colors.white;
               });
             },
             child: const Padding(
@@ -128,21 +120,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   InkWell myCard(MyQuestion question, int index) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         setState(() {
-        if(question.options[index]  == question.answer){
-          myColor = Colors.green;
-        }
-        else {
-          myColor = Colors.red;
-        }
+          if (question.options[index].option == question.answer) {
+            question.options[index].isCorrect = true;
+          } else {
+            question.options[index].isCorrect = false;
+          }
         });
       },
       child: Card(
-        color: myColor,
-        child: Center(child: Text(question.options[index].toString())),
-      ),
+          color: question.options[index].isCorrect == null
+              ? Colors.white
+              : question.options[index].isCorrect!
+                  ? Colors.green
+                  : Colors.red,
+          child: Center(
+            child: Text(question.options[index].toString(),
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: question.options[index].isCorrect == null
+                        ? Colors.black
+                        : Colors.white)),
+          )),
     );
   }
 }
-
